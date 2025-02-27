@@ -1,4 +1,4 @@
-FROM clux/muslrust:stable as build
+FROM clux/muslrust:stable AS build
 
 RUN --mount=type=bind,target=.,readwrite,source=./tunnelto cargo build --bin tunnelto_server --release \
     && cp ./target/aarch64-unknown-linux-musl/release/tunnelto_server /bin/tunnelto_server
