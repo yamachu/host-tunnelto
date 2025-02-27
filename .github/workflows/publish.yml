@@ -1,0 +1,16 @@
+name: Publish
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-24.04-arm
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: true
+      - working-directory: tunnelto
+        run: |
+          sed -i 's/-it//g' musl_build.sh
+          ./musl_build.sh
+      - run: ls -al tunnelto/target
