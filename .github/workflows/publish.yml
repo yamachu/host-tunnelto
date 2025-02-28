@@ -19,11 +19,11 @@ jobs:
       - uses: aws-actions/amazon-ecr-login@v2
         id: ecr-login
       - uses: docker/setup-buildx-action@v3
-        id: buildx
       - uses: docker/build-push-action@v6
         with:
-          builder: ${{ steps.buildx.outputs.name }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: |
+            type=gha,scope=publish
+            type=registry,ref=${{ steps.ecr-login.outputs.registry }}/yamachu/host-tunnelto:latest
+          cache-to: type=gha,mode=max,scope=publish
           tags: ${{ steps.ecr-login.outputs.registry }}/yamachu/host-tunnelto:latest
           push: true
